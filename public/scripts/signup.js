@@ -17,9 +17,9 @@ const handleSubmitClick = (event) => {
     })
         .then((response) => response.json())
         .then((data) => {
-        // if (data.status === 201) {
-        //     window.location = '/login'
-        // }
+        if (data.status === 201) {
+            window.location = '/login';
+        }
         console.log(data);
     })
         .catch((error) => console.log(error));
