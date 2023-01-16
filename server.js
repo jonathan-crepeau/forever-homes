@@ -4,6 +4,8 @@ dotenv.config();
 import express from 'express';
 const app = express();
 const PORT = process.env.PORT;
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 import {router as viewsRouter} from './routes/views';
 import {router as authRouter} from './routes/api';
@@ -16,6 +18,17 @@ app.use(express.static('public'));
 app.use(logger);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+// SECTION Session Middleware
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://jonathan-crepeau:mypassword@forevercluster0.dcn31ga.mongodb.net/fhusers?retryWrites=true&w=majority"
+    }),
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {}
+}));
 
 // SECTION Views Routes
 app.use('/', viewsRouter);
